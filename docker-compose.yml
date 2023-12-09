@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: deme_development
+
+  app:
+    depends_on:
+      - postgres
+    build: .
+    command: rails server -b 0.0.0.0 -p 3000
+    ports:
+      - '3000:3000'
+    volumes:
+      - bundle_cache:/bundle
+      - .:/app
+    environment:
+      DATABASE_URL: postgres://postgres:password@postgres:5432/deme_development
+      SECRET_KEY_BASE: aaaa
+
+volumes:
+  postgres:
+  bundle_cache:
