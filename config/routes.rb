@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :posts
   root to: 'welcome#index'
   devise_for :users
   devise_scope :user do

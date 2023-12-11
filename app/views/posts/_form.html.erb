@@ -1,0 +1,32 @@
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.select :user_id, options_for_select(User.select(:id, :first_name, :last_name).map{ |user| ["#{user.first_name} #{user.last_name}".strip, user.id]}), :class => 'genForm_dropBox' %>
+  </div>
+
+  <div>
+    <%= form.label :post, style: "display: block" %>
+    <%= form.text_field :post %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
